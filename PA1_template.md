@@ -18,7 +18,8 @@ DNAR <- subset(data, is.na(data$steps) == F)
 
 ## What is mean total number of steps taken per day?
 
-* Calculate the total number of steps taken per day (TPD)
+1. Calculate the total number of steps taken per day (TPD)
+2. Make a histogram of the total number of steps taken each day
 
 
 ```r
@@ -30,7 +31,7 @@ hist(TPD$steps, breaks = 20, main="Number of Steps",
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
 
-* Calculate and report the mean and median total number of steps taken per day
+3. Calculate and report the mean and median total number of steps taken per day
 
 
 ```r
@@ -52,7 +53,7 @@ median(TPD$steps)
 
 ## What is the average daily activity pattern?
 
-* Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 * calcluating the average number of steps taken in each 5-minite intervals (AVG)
 
@@ -72,7 +73,7 @@ axis(2)
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 
-* Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
 ```r
@@ -84,11 +85,11 @@ AVG[which.max(AVG$steps),]
 ## 104      835 206.1698
 ```
 
-So it is the 5 minute interval from 8:35
+* So it is the 5 minute interval from 8:35 !*
 
 ## Imputing missing values
 
-* Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
 
 ```r
@@ -99,11 +100,11 @@ sum(is.na(data$steps))
 ## [1] 2304
 ```
 
-* Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated.
+2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated.
 
-* I will fill the NAs with average value for that 5-min interval
+* I will fill the NAs with average value for that 5-min interval !*
 
-* Create a new dataset that is equal to the original dataset but with the missing data filled in
+3. Create a new dataset that is equal to the original dataset but with the missing data filled in
 
 
 ```r
@@ -117,8 +118,7 @@ for (i in 1:nrow(imputed)){
 imputed <- arrange(imputed, interval)
 ```
 
-* Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? 
-* What is the impact of imputing missing data on the estimates of the total daily number of steps?
+4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 * calculating the total number of steps Impute (TPDI) taken each day
 
@@ -135,7 +135,7 @@ hist(TPDI$steps, breaks = 20,
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 
-* Calculate and report the mean and median total number of steps taken per day on the imputed dataset
+* Calculate and report the mean and median total number of steps taken per day on the imputed dataset !*
 
 
 ```r
@@ -170,8 +170,8 @@ abs(median(TPD$steps)- median(TPDI$steps))/median(TPD$steps)
 ## [1] 0.0001104207
 ```
 
-** so the mean didn't change after the imputing, 
-** the median slightly changed about 0.1% of the original value.
+* so the mean didn't change after the imputing, !* 
+* the median slightly changed about 0.1% of the original value.!*
 
 
 * test how total steps taken per day differ
@@ -186,11 +186,11 @@ DIFF
 ## [1] 86129.51
 ```
 
-** The difference shows - Impute the dataset cause the estimation on total steps per day to increase
+* The difference shows - Impute the dataset cause the estimation on total steps per day to increase !*
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-* Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
 
 ```r
@@ -205,7 +205,8 @@ Sys.setlocale("LC_TIME", "English")
 imputed$weekdays <- weekdays(as.Date(imputed$date))
 imputed$weekdays <- ifelse(imputed$weekdays %in% c("Saturday", "Sunday"),"weekend", "weekday")
 ```
-* Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+
+2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
 
 * calcluating the average for each interval
 
@@ -214,6 +215,13 @@ imputed$weekdays <- ifelse(imputed$weekdays %in% c("Saturday", "Sunday"),"weeken
 average <- ddply(imputed, .(interval, weekdays), summarise, steps=mean(steps))
 
 library(lattice)
+```
+
+```
+## Warning: package 'lattice' was built under R version 3.1.3
+```
+
+```r
 xyplot(steps ~ interval | weekdays, 
        data = average, 
        layout = c(1, 2), 
@@ -223,5 +231,6 @@ xyplot(steps ~ interval | weekdays,
 ```
 
 ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 
-* This completes all the requireemnts in Peer Assessment 1
+
+** This completes all the requirements in Peer Assessment 1 !**
 
